@@ -15,6 +15,7 @@
 		A4B8CC0822146FF6004E9741 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4B8CC0622146FF6004E9741 /* LaunchScreen.storyboard */; };
 		A4B8CC1322146FF6004E9741 /* _DCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1222146FF6004E9741 /* _DCalendarTests.swift */; };
 		A4B8CC1E22146FF6004E9741 /* _DCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */; };
+		A4B8CC2C22147024004E9741 /* dodecahedron.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		A4B8CC1922146FF6004E9741 /* 3DCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3DCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DCalendarUITests.swift; sourceTree = "<group>"; };
 		A4B8CC1F22146FF6004E9741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = dodecahedron.scnassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		A4B8CBEF22146FF4004E9741 = {
 			isa = PBXGroup;
 			children = (
+				A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */,
 				A4B8CBFA22146FF4004E9741 /* 3DCalendar */,
 				A4B8CC1122146FF6004E9741 /* 3DCalendarTests */,
 				A4B8CC1C22146FF6004E9741 /* 3DCalendarUITests */,
@@ -234,6 +237,7 @@
 			files = (
 				A4B8CBFE22146FF4004E9741 /* art.scnassets in Resources */,
 				A4B8CC0822146FF6004E9741 /* LaunchScreen.storyboard in Resources */,
+				A4B8CC2C22147024004E9741 /* dodecahedron.scnassets in Resources */,
 				A4B8CC0522146FF6004E9741 /* Assets.xcassets in Resources */,
 				A4B8CC0322146FF4004E9741 /* Main.storyboard in Resources */,
 			);
@@ -439,6 +443,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y32EQUAEWX;
 				INFOPLIST_FILE = 3DCalendar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,6 +462,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Y32EQUAEWX;
 				INFOPLIST_FILE = 3DCalendar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
