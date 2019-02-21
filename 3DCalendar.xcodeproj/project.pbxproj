@@ -16,6 +16,7 @@
 		A4B8CC1322146FF6004E9741 /* _DCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1222146FF6004E9741 /* _DCalendarTests.swift */; };
 		A4B8CC1E22146FF6004E9741 /* _DCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */; };
 		A4B8CC2C22147024004E9741 /* dodecahedron.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */; };
+		A4B8CC78221F2596004E9741 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC77221F2596004E9741 /* CalendarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DCalendarUITests.swift; sourceTree = "<group>"; };
 		A4B8CC1F22146FF6004E9741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = dodecahedron.scnassets; sourceTree = "<group>"; };
+		A4B8CC77221F2596004E9741 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				A4B8CBFB22146FF4004E9741 /* AppDelegate.swift */,
 				A4B8CBFD22146FF4004E9741 /* art.scnassets */,
 				A4B8CBFF22146FF4004E9741 /* ViewController.swift */,
+				A4B8CC77221F2596004E9741 /* CalendarView.swift */,
 				A4B8CC0122146FF4004E9741 /* Main.storyboard */,
 				A4B8CC0422146FF6004E9741 /* Assets.xcassets */,
 				A4B8CC0622146FF6004E9741 /* LaunchScreen.storyboard */,
@@ -266,6 +269,7 @@
 			files = (
 				A4B8CC0022146FF4004E9741 /* ViewController.swift in Sources */,
 				A4B8CBFC22146FF4004E9741 /* AppDelegate.swift in Sources */,
+				A4B8CC78221F2596004E9741 /* CalendarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
