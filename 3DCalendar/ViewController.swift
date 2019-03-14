@@ -14,6 +14,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    let viewToAdd = CalendarView(frame: CGRect(x: 100, y: 100, width: 500, height: 550))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,12 +25,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        createUIViewOnNode()
         // Create a new scene
-        //let scene = SCNScene(named: "dodecahedron.scnassets/dodecahedron.scn")!
-        
-        // Set the scene to the view
-       // sceneView.scene = scene
+        createUIViewOnNode(vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
+
         sceneView.autoenablesDefaultLighting = true
     }
     
@@ -49,10 +48,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
-    func shapeNode() {
+    func shapeNode() -> SCNNode {
         let scene = SCNScene(named: "dodecahedron.scnassets/dodecahedron.scn")!
         let node = scene.rootNode.childNode(withName: "dodecahedron", recursively: true)
-        
+        node?.scale = SCNVector3(0.1, 0.1, 0.1)
+        return node!
     }
     
     // MARK: - ARSCNViewDelegate
@@ -91,10 +91,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         path.addLine(to: CGPoint(x: 0.3, y: 0.4))//E
         path.close()
         
-        let shape = SCNShape(path: path, extrusionDepth: 0.2) //20 cm
+        let shape = SCNShape(path: path, extrusionDepth: 0.05) //20 cm
         let color = UIColor.red
         shape.firstMaterial?.diffuse.contents = color
-        shape.chamferRadius = 0.1
+        shape.chamferRadius = 0.0
         //create a node
         let pentagonNode = SCNNode(geometry: shape)
         //position the node and add to the scene
@@ -102,31 +102,44 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return pentagonNode
     }
     
+    func createPlane() -> SCNNode {
+        var plane = SCNPlane(width: 0.3, height: 0.3)
+        plane.firstMaterial?.diffuse.contents = UIColor.red
+        let planeNode = SCNNode(geometry: plane)
+        planeNode.position.z = -0.5
+        return planeNode
+    }
+    
     //Test UI paste on top of node
-    func createUIViewOnNode(){
+    func createUIViewOnNode(vector: SCNVector3){
         
         //1. Create An Empty Node
-        let holderNode = createPentagon()
+        let holderNode = shapeNode()
         
         
         //2. Create A New Material
         let material = SCNMaterial()
+        let viewMaterial = SCNMaterial()
         
         //3. Create A UIView As A Holder For Content
-        let viewToAdd = CalendarView(frame: CGRect(x: 100, y: 100, width: 500, height: 500))
-        
+       
         //5. Set The Materials Contents
-        material.diffuse.contents = viewToAdd
+        viewMaterial.diffuse.contents = viewToAdd
+        material.diffuse.contents = UIColor.red
         
         //6. Set The 1st Material Of The Plane
         holderNode.geometry?.firstMaterial = material
-        material.isDoubleSided = true
+        holderNode.childNodes[0].geometry?.firstMaterial = material
+        holderNode.childNodes[1].geometry?.firstMaterial = viewMaterial
+        holderNode.childNodes[2].geometry?.firstMaterial = material
+        holderNode.childNodes[3].geometry?.firstMaterial = material
+        //material.isDoubleSided = true
         //holderNode.addChildNode(node)
         
         //7. Add To The Scene & Position It
         sceneView.scene.rootNode.addChildNode(holderNode)
         
-        holderNode.position = SCNVector3(0, 0, -1.0)
+        holderNode.position = vector
     }
     
 }
