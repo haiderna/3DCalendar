@@ -15,6 +15,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     let viewToAdd = CalendarView(frame: CGRect(x: 100, y: 100, width: 500, height: 550))
+    let videoView = VideoTester(frame: CGRect(x: 200, y: 200, width: 1000, height: 1000))
+    let colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.purple, UIColor.orange, UIColor.yellow, UIColor.magenta, UIColor.gray, UIColor.black]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +28,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        createUIViewOnNode(vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
+        createUIViewOnNode(vector: SCNVector3(x: 0, y: -0.6, z: -0.1))
 
         sceneView.autoenablesDefaultLighting = true
     }
@@ -120,6 +122,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //2. Create A New Material
         let material = SCNMaterial()
         let viewMaterial = SCNMaterial()
+        let videoMaterial = SCNMaterial()
         
         //3. Create A UIView As A Holder For Content
        
@@ -127,12 +130,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         viewMaterial.diffuse.contents = viewToAdd
         material.diffuse.contents = UIColor.red
         
+        let videoURL = URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+        let player = AVPlayer(url: videoURL!)
+        player.play()
+    
+
+        videoMaterial.diffuse.contents = player
+        
         //6. Set The 1st Material Of The Plane
         holderNode.geometry?.firstMaterial = material
-        holderNode.childNodes[0].geometry?.firstMaterial = material
+        holderNode.childNodes[0].geometry?.firstMaterial = videoMaterial
         holderNode.childNodes[1].geometry?.firstMaterial = viewMaterial
         holderNode.childNodes[2].geometry?.firstMaterial = material
         holderNode.childNodes[3].geometry?.firstMaterial = material
+        holderNode.childNodes[10].geometry?.firstMaterial = material
         //material.isDoubleSided = true
         //holderNode.addChildNode(node)
         
