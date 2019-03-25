@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
  
     var numDaysPerMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
     var currentMonthIndex: Int = 0
@@ -30,21 +30,21 @@ class CalendarView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         return myCollectionView
         
     }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    
+    override func viewDidLoad() {
+        self.view.frame = CGRect(x: 100, y: 100, width: 250, height: 250)
+        self.view.backgroundColor = UIColor.purple
         initializeView()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewDidAppear(_ animated: Bool) {
+        
     }
     
     func initializeView() {
-        currentMonthIndex = Calendar.current.component(.month, from: Date())
+        currentMonthIndex = 1
         currentYear = Calendar.current.component(.year, from: Date())
-        todaysDate = Calendar.current.component(.day, from: Date())
+        todaysDate = 1
         //firstWeekDayOfMonth = getFirstWeekDay()
         
         //leap years
@@ -77,11 +77,11 @@ class CalendarView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func setUpViews() {
-        addSubview(myCollectionView)
-        myCollectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        myCollectionView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        myCollectionView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        myCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        self.view.addSubview(myCollectionView)
+        myCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        myCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        myCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        myCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -107,7 +107,6 @@ class CalendarView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         }
         return cell
     }
-
 }
 
 class dateCell: UICollectionViewCell {
@@ -116,14 +115,15 @@ class dateCell: UICollectionViewCell {
         let lbl = UILabel()
         lbl.text = "00"
         lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 16)
+        lbl.font = UIFont.systemFont(ofSize: 12)
         lbl.textColor = UIColor.gray
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        let frame2 = CGRect(x: 0, y: 0, width: 25, height: 25)
+        super.init(frame: frame2)
         backgroundColor = UIColor.clear
         layer.cornerRadius = 5
         layer.masksToBounds = true
