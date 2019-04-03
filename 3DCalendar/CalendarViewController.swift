@@ -1,5 +1,5 @@
 //
-//  CalendarView.swift
+//  CalendarViewController.swift
 //  bolt
 //
 //  Created by Najia Haider on 2/20/19.
@@ -25,14 +25,18 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         let myCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         myCollectionView.showsHorizontalScrollIndicator = false
         myCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        myCollectionView.backgroundColor = .clear
+        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]
+        myCollectionView.backgroundColor = colors.randomElement()!
         myCollectionView.allowsMultipleSelection = false
         return myCollectionView
         
     }()
     
     override func viewDidLoad() {
-        self.view.frame = CGRect(x: 100, y: 100, width: 250, height: 250)
+        self.view.frame = CGRect(x: 0, y: 0, width: 500, height: 250)
+        let label = UILabel(frame: .init(x: view.frame.size.width/2, y: view.frame.size.height/2, width: 100, height: 50))
+        label.backgroundColor = .green
+        view.addSubview(label)
         self.view.backgroundColor = UIColor.purple
         initializeView()
     }
