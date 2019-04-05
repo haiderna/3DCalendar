@@ -17,22 +17,11 @@ class CalendarViewController: UICollectionViewController, UICollectionViewDelega
     var presentYear = 0
     var todaysDate = 0
     var firstWeekDayOfMonth = 0
-    
-//    let myCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//
-//        let myCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-//        myCollectionView.showsHorizontalScrollIndicator = false
-//        myCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]
-//        myCollectionView.backgroundColor = colors.randomElement()!
-//        myCollectionView.allowsMultipleSelection = false
-//        return myCollectionView
-//
-//    }()
 
-
+    static func make() -> CalendarViewController {
+        let viewController = UIStoryboard(name: "CalendarViewController", bundle: nil).instantiateInitialViewController() as! CalendarViewController
+        return viewController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +50,8 @@ class CalendarViewController: UICollectionViewController, UICollectionViewDelega
         
         setUpViews()
         
-//        myCollectionView.delegate = self
-//        myCollectionView.dataSource = self
 
-
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]

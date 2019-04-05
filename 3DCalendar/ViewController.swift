@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     let calendarViewControllers: [UIViewController] = {
         var viewControllers = [UIViewController]()
         for item in 0...11 {
-            viewControllers.append(CalendarViewController())
+            viewControllers.append(CalendarViewController.make())
         }
         return viewControllers
     }()
@@ -118,7 +118,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
 //        zip(dodecahedronNode.childNodes, calendarViewControllers).forEach { (node, calendarViewController) in
             let material = SCNMaterial()
-            material.diffuse.contents = calendarViewControllers.first!.view
+            let newImage = UIImage(view: calendarViewControllers.first!.view)
+        newImage.size
+            material.diffuse.contents = newImage
             materials.append(material)
             dodecahedronNode.childNodes.first?.geometry?.firstMaterial = material
 //        }
@@ -182,20 +184,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 }
 
 
-class TestViewController: UIViewController {
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .green
-        view.frame = .init(x: 0, y: 0, width: 500, height: 500)
+extension UIImage {
+    convenience init(view: UIView) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in:UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(cgImage: image!.cgImage!)
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.layer.backgroundColor = UIColor.orange.cgColor
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 }
