@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class CalendarViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
  
     var numDaysPerMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
     var currentMonthIndex: Int = 0
@@ -18,31 +18,31 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     var todaysDate = 0
     var firstWeekDayOfMonth = 0
     
-    let myCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        
-        let myCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        myCollectionView.showsHorizontalScrollIndicator = false
-        myCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]
-        myCollectionView.backgroundColor = colors.randomElement()!
-        myCollectionView.allowsMultipleSelection = false
-        return myCollectionView
-        
-    }()
-    
+//    let myCollectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+//
+//        let myCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+//        myCollectionView.showsHorizontalScrollIndicator = false
+//        myCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]
+//        myCollectionView.backgroundColor = colors.randomElement()!
+//        myCollectionView.allowsMultipleSelection = false
+//        return myCollectionView
+//
+//    }()
+
+
+
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.view.frame = CGRect(x: 0, y: 0, width: 500, height: 250)
-        let label = UILabel(frame: .init(x: view.frame.size.width/2, y: view.frame.size.height/2, width: 100, height: 50))
-        label.backgroundColor = .green
-        view.addSubview(label)
         self.view.backgroundColor = UIColor.purple
         initializeView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
     }
     
     func initializeView() {
@@ -61,9 +61,17 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         
         setUpViews()
         
-        myCollectionView.delegate = self
-        myCollectionView.dataSource = self
-        myCollectionView.register(dateCell.self, forCellWithReuseIdentifier: "Cell")
+//        myCollectionView.delegate = self
+//        myCollectionView.dataSource = self
+
+
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .black, .magenta, .gray, .cyan]
+        collectionView.backgroundColor = colors.randomElement()!
+        collectionView.allowsMultipleSelection = false
+
+        collectionView.register(dateCell.self, forCellWithReuseIdentifier: "Cell")
         
     }
     /*
@@ -81,18 +89,19 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func setUpViews() {
-        self.view.addSubview(myCollectionView)
-        myCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        myCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        myCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-        myCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+//        self.view.addSubview(myCollectionView)
+        self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        myCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+//        myCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+//        myCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+//        myCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return numDaysPerMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! dateCell
         cell.backgroundColor=UIColor.clear
         if indexPath.item <= firstWeekDayOfMonth - 2 {

@@ -15,6 +15,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     let colors = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple, UIColor.magenta, UIColor.cyan, UIColor.black, UIColor.gray, UIColor.orange, UIColor.white]
+
+
+    let calendarViewControllers: [UIViewController] = {
+        var viewControllers = [UIViewController]()
+        for item in 0...11 {
+            viewControllers.append(CalendarViewController())
+        }
+        return viewControllers
+    }()
+
     var materials = [SCNMaterial]()
     var dodecaNode = SCNNode()
     
@@ -105,23 +115,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func createUIViewOnNode(vector: SCNVector3) -> SCNNode {
         let dodecahedronNode = shapeNode()
         dodecahedronNode.position.y = -10.0
-        let calendarViewController = CalendarViewController()
-        
-        zip(dodecahedronNode.childNodes, colors).forEach { (node, color) in
+
+//        zip(dodecahedronNode.childNodes, calendarViewControllers).forEach { (node, calendarViewController) in
             let material = SCNMaterial()
-            material.diffuse.contents = CalendarViewController().view
+            material.diffuse.contents = calendarViewControllers.first!.view
             materials.append(material)
-            node.geometry?.firstMaterial = material
-        }
-        
-//        for index in 0...dodecahedronNode.childNodes.count-1 {
-//            let material = SCNMaterial()
-//            material.diffuse.contents = calendarViewController.view
-//            material.name = "side \(index)"
-//            materials.append(material)
-//            dodecahedronNode.childNodes[index].geometry?.firstMaterial = material
-//            print("Side: \(dodecahedronNode)")
+            dodecahedronNode.childNodes.first?.geometry?.firstMaterial = material
 //        }
+
         
         //7. Add To The Scene & Position It
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
@@ -178,4 +179,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+}
+
+
+class TestViewController: UIViewController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        view.backgroundColor = .green
+        view.frame = .init(x: 0, y: 0, width: 500, height: 500)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.layer.backgroundColor = UIColor.orange.cgColor
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
