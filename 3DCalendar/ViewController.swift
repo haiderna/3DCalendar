@@ -48,6 +48,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         addRotationGesture()
 
         sceneView.autoenablesDefaultLighting = true
+        sceneView.debugOptions = [.showWireframe]
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -116,11 +117,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let dodecahedronNode = shapeNode()
         dodecahedronNode.position.y = -10.0
 
+        //experimenting with images before using the calendar view, will revert to zip later 
 //        zip(dodecahedronNode.childNodes, calendarViewControllers).forEach { (node, calendarViewController) in
             let material = SCNMaterial()
             let newImage = UIImage(view: calendarViewControllers.first!.view)
-        newImage.size
-            material.diffuse.contents = newImage
+            let image = UIImage(named: "dog")
+            material.diffuse.contents = image
+            material.diffuse.contentsTransform = SCNMatrix4MakeScale(1.1, 1.1, 1.0)
             materials.append(material)
             dodecahedronNode.childNodes.first?.geometry?.firstMaterial = material
 //        }
