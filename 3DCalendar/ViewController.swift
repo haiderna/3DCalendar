@@ -116,22 +116,31 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func createUIViewOnNode(vector: SCNVector3) -> SCNNode {
         let dodecahedronNode = shapeNode()
         dodecahedronNode.position.y = -10.0
-
         //experimenting with images before using the calendar view, will revert to zip later 
 //        zip(dodecahedronNode.childNodes, calendarViewControllers).forEach { (node, calendarViewController) in
+        let (min, max) = dodecahedronNode.boundingBox
+        let width = CGFloat(max.x - min.x)
+        let height = CGFloat(max.y - min.y)
+        
             let material = SCNMaterial()
             let newImage = UIImage(view: calendarViewControllers.first!.view)
             let image = UIImage(named: "dog")
-            material.diffuse.contents = image
-            material.diffuse.contentsTransform = SCNMatrix4MakeScale(1.1, 1.1, 1.0)
+            material.diffuse.contents = newImage
+            material.diffuse.contentsTransform = SCNMatrix4MakeScale(Float(width), Float(height), 1)
+            //material.diffuse.contentsTransform = SCNMatrix4MakeTranslation(1.0, 1.0, 1.0)
+        
+            material.diffuse.wrapS = SCNWrapMode.repeat
+            material.diffuse.wrapT = SCNWrapMode.repeat
+            //material.diffuse.contentsTransform = SCNMatrix4MakeScale(1.1, 1.1, 1.0)
+            //material.diffuse.contentsTransform = SCNMatrix4MakeTranslation(0.0, 0.0, 0.0)
             materials.append(material)
             dodecahedronNode.childNodes.first?.geometry?.firstMaterial = material
+//        dodecahedronNode.childNodes.forEach { (node) in
+//            node.geometry?.firstMaterial = material
 //        }
-
-        
+//        }
         //7. Add To The Scene & Position It
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
-        
         dodecahedronNode.position = vector
         return dodecahedronNode
     }
