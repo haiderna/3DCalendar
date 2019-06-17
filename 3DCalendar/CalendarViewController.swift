@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//Calendar View Controller based off of https://github.com/jahid-hasan-polash/Calendar-iOS
 class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
  
     var numDaysPerMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
@@ -17,12 +17,20 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     var presentYear = 0
     var todaysDate = 0
     var firstWeekDayOfMonth = 0
+    var weekdayData = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+    var inputIndex: Int!
+    let maroon = UIColor(red: 102, green: 26, blue: 77, alpha: 1.0)
+    let greeny = UIColor(red: 51, green: 167, blue: 144, alpha: 1.0)
+    let aqua = UIColor(red: 123, green: 229, blue: 253, alpha: 1.0)
+    let lightPink = UIColor(red: 251, green: 209, blue: 223, alpha: 1.0)
     
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet weak var monthLabel: UILabel!
     
-    static func make() -> CalendarViewController {
+    static func make(inputIndex: Int) -> CalendarViewController {
         let viewController = UIStoryboard(name: "CalendarViewController", bundle: nil).instantiateInitialViewController() as! CalendarViewController
+        viewController.inputIndex = inputIndex
         return viewController
     }
     
@@ -32,10 +40,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     //   self.view.frame = CGRect(x: 100, y: 100, width: view.frame.width, height: view.frame.height)
-        self.view.backgroundColor = UIColor.purple
         collectionView.dataSource = self
         collectionView.delegate = self
+
         initializeView()
     }
     
@@ -44,10 +51,10 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func initializeView() {
-        currentMonthIndex = Calendar.current.component(.month, from: Date())
+        currentMonthIndex = inputIndex
         currentYear = Calendar.current.component(.year, from: Date())
         todaysDate = 1
-        //firstWeekDayOfMonth = getFirstWeekDay()
+        firstWeekDayOfMonth = getFirstWeekDay()
         
         //leap years
         if currentMonthIndex == 2 && currentYear % 4 == 0 {
@@ -62,8 +69,10 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let colors: [UIColor] = [.red, .blue, .green, .orange, .purple, .white, .magenta, .gray, .cyan]
-        collectionView.backgroundColor = colors.randomElement()!
+        let colors: [UIColor] = [.yellow, .cyan, greeny, lightPink, aqua]
+        let rando = colors.randomElement()
+        self.view.backgroundColor = rando
+        collectionView.backgroundColor = rando
         collectionView.allowsMultipleSelection = false
         
         collectionView.register(DateCell.self, forCellWithReuseIdentifier: "Cell")
@@ -87,12 +96,18 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numDaysPerMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1
+        if collectionView == collectionView {
+            return numDaysPerMonth[currentMonthIndex-1] + firstWeekDayOfMonth - 1
+        } else {
+            return weekdayData.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DateCell
-        cell.backgroundColor=UIColor.clear
+        cell.frame.size.width = 25.0
+        cell.frame.size.height = 25.0
         if indexPath.item <= firstWeekDayOfMonth - 2 {
             cell.isHidden = true
         } else {
@@ -100,34 +115,26 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
             cell.isHidden = false
             cell.label.text="\(calcDate)"
             if calcDate < todaysDate && currentYear == presentYear && currentMonthIndex == presentMonthIndex {
-                cell.isUserInteractionEnabled=false
+                cell.isUserInteractionEnabled = false
                 cell.label.textColor = UIColor.lightGray
             } else {
-                cell.isUserInteractionEnabled=true
+                cell.isUserInteractionEnabled = true
                 cell.label.textColor = UIColor.black
             }
         }
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.0
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
- 
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width / 7.0,
                       height: collectionView.bounds.width / 7.0)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.collectionViewLayout.invalidateLayout()
-        collectionView.reloadData()
-    }
 }
 
 class DateCell: UICollectionViewCell {
