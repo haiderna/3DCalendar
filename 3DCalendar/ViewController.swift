@@ -132,28 +132,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         self.view.addGestureRecognizer(panGesture)
         
-        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotateNode(_:)))
-        self.view.addGestureRecognizer(rotateGesture)
+
     }
     
-    @objc func rotateNode(_ gesture: UIRotationGestureRecognizer){
-        
-        //1. Get The Current Rotation From The Gesture
-        let rotation = Float(gesture.rotation)
-        
-        //2. If The Gesture State Has Changed Set The Nodes EulerAngles.y
-        if gesture.state == .changed{
-            isRotating = true
-            dodecaNode.eulerAngles.y = currentAngleY + rotation
-        }
-        
-        //3. If The Gesture Has Ended Store The Last Angle Of The Cube
-        if(gesture.state == .ended) {
-            currentAngleY = dodecaNode.eulerAngles.y
-            isRotating = false
-        }
-    }
-    
+    //gesture code based of off https://github.com/anoop4real/AR-RotateEarthWithGesture
     @objc func handleGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
         
         let translation = gestureRecognizer.translation(in: gestureRecognizer.view!)
