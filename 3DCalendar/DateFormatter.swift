@@ -18,7 +18,7 @@ extension DateFormatter {
 
     static var singleDayDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
+        formatter.dateFormat = "d"
         return formatter
     }()
 

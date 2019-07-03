@@ -60,13 +60,18 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let frontBuffer = Calendar.current.component(.weekday, from: firstDayOfMonth) - 1
         let backBuffer = 7 - Calendar.current.component(.weekday, from: lastDayOfMonth)
 
-        (1...frontBuffer).forEach { _ in
-            viewModels.insert(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear), at: 0)
+        if frontBuffer > 0 {
+            (1...frontBuffer).forEach { _ in
+                viewModels.insert(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear), at: 0)
+            }
         }
-
-        (1...backBuffer).forEach { _ in
-            viewModels.append(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear))
+       
+        if backBuffer > 0 {
+            (1...backBuffer).forEach { _ in
+                viewModels.append(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear))
+            }
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
