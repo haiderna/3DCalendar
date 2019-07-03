@@ -15,11 +15,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet var sceneView: ARSCNView!
     
     let calendarViewControllers: [UIViewController] = {
-        var viewControllers = [UIViewController]()
-        for item in 1...12 {
-            viewControllers.append(CalendarViewController.make(inputIndex: item))
+        let components = Calendar.current.dateComponents(in: .current, from: Date())
+        let range = Calendar.current.range(of: .month, in: .year, for: Date())!
+
+        let months = range.compactMap {
+            DateComponents(calendar: components.calendar,
+                           timeZone: components.timeZone,
+                           year: components.year,
+                           month: $0,
+                           day: 1).date
         }
-        return viewControllers
+        return months.map { CalendarViewController.make(date: $0) }
     }()
 
     var materials = [SCNMaterial]()
