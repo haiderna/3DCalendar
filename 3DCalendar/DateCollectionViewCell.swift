@@ -8,25 +8,28 @@
 
 import UIKit
 
-class DateCell: UICollectionViewCell {
+class DateCollectionViewCell: UICollectionViewCell {
+
+    struct ViewModel {
+        let title: String?
+        let textColor: UIColor
+    }
     
     let label: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "00"
-        lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 12)
-        lbl.textColor = UIColor.gray
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override init(frame: CGRect) {
-        let frame2 = CGRect(x: 0, y: 0, width: 25, height: 25)
-        super.init(frame: frame2)
-        backgroundColor = UIColor.clear
+        let updatedFrame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        super.init(frame: updatedFrame)
+        backgroundColor = .clear
         layer.cornerRadius = 5
         layer.masksToBounds = true
-        
         setUpViews()
     }
     
@@ -41,16 +44,9 @@ class DateCell: UICollectionViewCell {
         label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
-}
 
-extension Date {
-    var weekday: Int {
-        return Calendar.current.component(.weekday, from: self)
-    }
-    var firstDayOfTheMonth: Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year,.month], from: self))!
-    }
-    func month(monthIndex: Int) -> String {
-        return Calendar.current.monthSymbols[monthIndex]
+    func configure(viewModel: ViewModel) {
+        label.text = viewModel.title
+        label.textColor = viewModel.textColor
     }
 }

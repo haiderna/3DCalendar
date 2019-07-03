@@ -18,7 +18,7 @@
 		A4B8CC1322146FF6004E9741 /* _DCalendarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1222146FF6004E9741 /* _DCalendarTests.swift */; };
 		A4B8CC1E22146FF6004E9741 /* _DCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */; };
 		A4B8CC2C22147024004E9741 /* dodecahedron.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */; };
-		A4F8FF5322CBF191001D3DDD /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FF5222CBF191001D3DDD /* DateCell.swift */; };
+		A4F8FF5322CBF191001D3DDD /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F8FF5222CBF191001D3DDD /* DateCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 		A4B8CC1D22146FF6004E9741 /* _DCalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _DCalendarUITests.swift; sourceTree = "<group>"; };
 		A4B8CC1F22146FF6004E9741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4B8CC2B22147024004E9741 /* dodecahedron.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = dodecahedron.scnassets; sourceTree = "<group>"; };
-		A4F8FF5222CBF191001D3DDD /* DateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		A4F8FF5222CBF191001D3DDD /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +112,7 @@
 				A4B8CBFF22146FF4004E9741 /* ViewController.swift */,
 				A4814C4722972E40004D8A25 /* CalendarViewController.storyboard */,
 				A4814C4322972D90004D8A25 /* CalendarViewController.swift */,
-				A4F8FF5222CBF191001D3DDD /* DateCell.swift */,
+				A4F8FF5222CBF191001D3DDD /* DateCollectionViewCell.swift */,
 				A4B8CC0122146FF4004E9741 /* Main.storyboard */,
 				A4B8CC0422146FF6004E9741 /* Assets.xcassets */,
 				A4B8CC0622146FF6004E9741 /* LaunchScreen.storyboard */,
@@ -276,7 +276,7 @@
 				A4814C4422972D90004D8A25 /* CalendarViewController.swift in Sources */,
 				A4B8CC0022146FF4004E9741 /* ViewController.swift in Sources */,
 				A4B8CBFC22146FF4004E9741 /* AppDelegate.swift in Sources */,
-				A4F8FF5322CBF191001D3DDD /* DateCell.swift in Sources */,
+				A4F8FF5322CBF191001D3DDD /* DateCollectionViewCell.swift in Sources */,
 				5C95E66122CD306100B54D57 /* DateFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
