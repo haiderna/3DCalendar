@@ -20,10 +20,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     var weekdayData = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
     var inputIndex: Int!
-    let maroon = UIColor(red: 102, green: 26, blue: 77, alpha: 1.0)
-    let greeny = UIColor(red: 51, green: 167, blue: 144, alpha: 1.0)
-    let aqua = UIColor(red: 123, green: 229, blue: 253, alpha: 1.0)
-    let lightPink = UIColor(red: 251, green: 209, blue: 223, alpha: 1.0)
     
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet weak var monthLabel: UILabel!
@@ -65,11 +61,15 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         presentYear = currentYear
         
         setUpViews()
+        setUpCollectionView()
         
+    }
+    
+    func setUpCollectionView() {
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let colors: [UIColor] = [.yellow, .cyan, greeny, lightPink, aqua]
+        let colors: [UIColor] = [.yellow, .cyan, .white, .green]
         let rando = colors.randomElement()
         self.view.backgroundColor = rando
         collectionView.backgroundColor = rando
@@ -87,12 +87,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     }
     
     func setUpViews() {
-//        self.view.addSubview(myCollectionView)
         self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        myCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-//        myCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-//        myCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-//        myCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -137,52 +132,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
     
 }
 
-class DateCell: UICollectionViewCell {
-    
-    let label: UILabel = {
-        let lbl = UILabel()
-        lbl.text = "00"
-        lbl.textAlignment = .center
-        lbl.font = UIFont.systemFont(ofSize: 12)
-        lbl.textColor = UIColor.gray
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        return lbl
-    }()
-    
-    override init(frame: CGRect) {
-        let frame2 = CGRect(x: 0, y: 0, width: 25, height: 25)
-        super.init(frame: frame2)
-        backgroundColor = UIColor.clear
-        layer.cornerRadius = 5
-        layer.masksToBounds = true
-        
-        setUpViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setUpViews() {
-        addSubview(label)
-        label.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-    }
-}
-
-extension Date {
-    var weekday: Int {
-        return Calendar.current.component(.weekday, from: self)
-    }
-    var firstDayOfTheMonth: Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year,.month], from: self))!
-    }
-    func month(monthIndex: Int) -> String {
-        return Calendar.current.monthSymbols[monthIndex]
-    }
-}
 
 extension String {
     static var dateFormatter: DateFormatter = {

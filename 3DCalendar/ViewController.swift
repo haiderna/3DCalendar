@@ -14,9 +14,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
-    let colors = [UIColor.red, UIColor.orange, UIColor.yellow, UIColor.green, UIColor.blue, UIColor.purple, UIColor.magenta, UIColor.cyan, UIColor.black, UIColor.gray, UIColor.orange, UIColor.white]
-
-
     let calendarViewControllers: [UIViewController] = {
         var viewControllers = [UIViewController]()
         for item in 1...12 {
@@ -28,10 +25,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var materials = [SCNMaterial]()
     var dodecaNode = SCNNode()
     
-    //Gestures
-    //Store The Rotation Of The CurrentNode
     var currentAngleY: Float = 0.0
-    //Not Really Necessary But Can Use If You Like
+    
     var isRotating = false
     
     override func viewDidLoad() {
@@ -105,9 +100,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let color = UIColor.red
         shape.firstMaterial?.diffuse.contents = color
         shape.chamferRadius = 0.0
-        //create a node
+       
         let pentagonNode = SCNNode(geometry: shape)
-        //position the node and add to the scene
+       
         pentagonNode.position.z = -1
         return pentagonNode
     }
@@ -118,11 +113,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
   
         for item in 0...11 {
             let material = SCNMaterial()
-            material.diffuse.contents = UIImage(view: calendarViewControllers[item].view)
+            material.diffuse.contents = calendarViewControllers[item].view
             dodecahedronNode.childNodes[item].geometry?.firstMaterial = material
         }
         
-        //7. Add To The Scene & Position It
+       
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
         dodecahedronNode.position = vector
         return dodecahedronNode
@@ -131,8 +126,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func addRotationGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         self.view.addGestureRecognizer(panGesture)
+        let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotateNode(_:)))
+        self.view.addGestureRecognizer(rotateGesture)
+    }
+    
+    // rotation gesture code from https://stackoverflow.com/questions/49473739/ios-arkit-how-to-create-rotate-object-gesture-function/49475626
+    @objc func rotateNode(_ gesture: UIRotationGestureRecognizer){
         
-
+        let rotation = Float(gesture.rotation)
+        
+        if gesture.state == .changed{
+            isRotating = true
+            dodecaNode.eulerAngles.y = currentAngleY + rotation
+        }
+        
+        if(gesture.state == .ended) {
+            currentAngleY = dodecaNode.eulerAngles.y
+            isRotating = false
+        }
     }
     
     //gesture code based of off https://github.com/anoop4real/AR-RotateEarthWithGesture
@@ -154,15 +165,4 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         self.dodecaNode.rotation = rotationVector
     }
     
-}
-
-
-extension UIImage {
-    convenience init(view: UIView) {
-        UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in:UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
-    }
 }
