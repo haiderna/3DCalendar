@@ -44,8 +44,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        dodecaNode = createUIViewOnNode(vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
+        dodecaNode = setShapeAndSceneOfNode()
+        putMonthViewsOnChildNodes(dodecahedronNode: dodecaNode, vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
+        
         addRotationGesture()
 
         sceneView.autoenablesDefaultLighting = true
@@ -68,7 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
 
-    func shapeNode() -> SCNNode {
+    func setShapeAndSceneOfNode() -> SCNNode {
         let scene = SCNScene(named: "dodecahedron.scnassets/Dodecahedron4.scn")!
         let node = scene.rootNode.childNode(withName: "dodecahedron", recursively: true)
         node?.scale = SCNVector3(0.1, 0.1, 0.1)
@@ -92,29 +93,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
     }
     
-    //pentagon via Bezier Path
-    func createPentagon() -> SCNNode {
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0.0, y: 0.6)) //A
-        path.addLine(to: CGPoint(x: -0.3, y: 0.4))//B
-        path.addLine(to: CGPoint(x: -0.2, y: 0.1))//C
-        path.addLine(to: CGPoint(x: 0.2, y: 0.1))//D
-        path.addLine(to: CGPoint(x: 0.3, y: 0.4))//E
-        path.close()
-        
-        let shape = SCNShape(path: path, extrusionDepth: 0.05) //20 cm
-        let color = UIColor.red
-        shape.firstMaterial?.diffuse.contents = color
-        shape.chamferRadius = 0.0
-       
-        let pentagonNode = SCNNode(geometry: shape)
-       
-        pentagonNode.position.z = -1
-        return pentagonNode
-    }
-
-    func createUIViewOnNode(vector: SCNVector3) -> SCNNode {
-        let dodecahedronNode = shapeNode()
+    func putMonthViewsOnChildNodes(dodecahedronNode: SCNNode, vector: SCNVector3) {
         dodecahedronNode.position.y = -10.0
   
         for item in 0...11 {
@@ -126,7 +105,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
        
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
         dodecahedronNode.position = vector
-        return dodecahedronNode
     }
     
     func addRotationGesture() {
