@@ -22,14 +22,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         return viewController
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
 
         initializeView()
     }
@@ -60,6 +54,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let frontBuffer = Calendar.current.component(.weekday, from: firstDayOfMonth) - 1
         let backBuffer = 7 - Calendar.current.component(.weekday, from: lastDayOfMonth)
 
+        //set up weekdays to start on accurate day of the month
         if frontBuffer > 0 {
             (1...frontBuffer).forEach { _ in
                 viewModels.insert(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear), at: 0)
@@ -71,11 +66,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
                 viewModels.append(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear))
             }
         }
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     func initializeView() {
@@ -87,9 +77,9 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let colors: [UIColor] = [.yellow, .cyan, .white, .green]
+        let colors: [UIColor] = [.pink, .darkYellow, .brightPink, .aqua]
         let rando = colors.randomElement()
-        self.view.backgroundColor = rando
+        view.backgroundColor = rando
         collectionView.backgroundColor = rando
         collectionView.allowsMultipleSelection = false
         

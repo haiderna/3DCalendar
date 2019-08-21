@@ -43,6 +43,10 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="b0h-bx-hIs" id="UkY-5E-gvE"/>
+                                    <outlet property="delegate" destination="b0h-bx-hIs" id="qWL-SR-MrD"/>
+                                </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun    Mon   Tues    Wed   Thurs  Fri  Sat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJx-Yr-rSt">
                                 <rect key="frame" x="0.0" y="132" width="375" height="27"/>

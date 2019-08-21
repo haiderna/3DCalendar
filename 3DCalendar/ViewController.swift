@@ -14,10 +14,15 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     
+    var materials = [SCNMaterial]()
+    var dodecaNode = SCNNode()
+    var currentAngleY: Float = 0.0
+    var isRotating = false
+    
     let calendarViewControllers: [UIViewController] = {
         let components = Calendar.current.dateComponents(in: .current, from: Date())
         let range = Calendar.current.range(of: .month, in: .year, for: Date())!
-
+        
         let months = range.compactMap {
             DateComponents(calendar: components.calendar,
                            timeZone: components.timeZone,
@@ -27,13 +32,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         return months.map { CalendarViewController.make(date: $0) }
     }()
-
-    var materials = [SCNMaterial]()
-    var dodecaNode = SCNNode()
-    
-    var currentAngleY: Float = 0.0
-    
-    var isRotating = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,39 +68,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
 
     func setShapeAndSceneOfNode() -> SCNNode {
-        let scene = SCNScene(named: "dodecahedron.scnassets/Dodecahedron4.scn")!
-        let node = scene.rootNode.childNode(withName: "dodecahedron", recursively: true)
-        node?.scale = SCNVector3(0.1, 0.1, 0.1)
-        return node!
-    }
-    
-    // MARK: - ARSCNViewDelegate
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+        guard let scene = SCNScene(named: "dodecahedron.scnassets/Dodecahedron4.scn"),
+            let node = scene.rootNode.childNode(withName: "dodecahedron", recursively: true) else {
+                fatalError("Unable to load node")
+        }
         
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+        node.scale = SCNVector3(0.1, 0.1, 0.1)
+        return node
     }
     
     func putMonthViewsOnChildNodes(dodecahedronNode: SCNNode, vector: SCNVector3) {
         dodecahedronNode.position.y = -10.0
   
-        for item in 0...11 {
+        for item in 0...calendarViewControllers.count - 1 {
             let material = SCNMaterial()
             material.diffuse.contents = calendarViewControllers[item].view
             dodecahedronNode.childNodes[item].geometry?.firstMaterial = material
         }
-        
-       
+    
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
         dodecahedronNode.position = vector
     }
@@ -145,8 +128,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         rotationVector.z = 0.0
         rotationVector.w = anglePan
         
-        
         self.dodecaNode.rotation = rotationVector
     }
-    
 }
