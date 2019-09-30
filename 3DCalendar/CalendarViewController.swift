@@ -54,7 +54,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegateFlowLayo
         let frontBuffer = Calendar.current.component(.weekday, from: firstDayOfMonth) - 1
         let backBuffer = 7 - Calendar.current.component(.weekday, from: lastDayOfMonth)
 
-        //set up weekdays to start on accurate day of the month
+        //add empty cells for days before the 1st day of the month and after the last
         if frontBuffer > 0 {
             (1...frontBuffer).forEach { _ in
                 viewModels.insert(DateCollectionViewCell.ViewModel(title: nil, textColor: .clear), at: 0)
