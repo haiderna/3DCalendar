@@ -41,9 +41,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
+        //set shape of dodecahedron and resize
         dodecaNode = setShapeAndSceneOfNode()
-        putMonthViewsOnChildNodes(dodecahedronNode: dodecaNode, vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
+        //place dodecahedron into view and paste months onto each side
+        putMonthViewsOnChildNodesAndAddToView(dodecahedronNode: dodecaNode, vector: SCNVector3(x: 0, y: -0.1, z: -0.1))
         
         addRotationGesture()
 
@@ -77,15 +78,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return node
     }
     
-    func putMonthViewsOnChildNodes(dodecahedronNode: SCNNode, vector: SCNVector3) {
+    func putMonthViewsOnChildNodesAndAddToView(dodecahedronNode: SCNNode, vector: SCNVector3) {
+        //putting the node on eye level by lowering it
         dodecahedronNode.position.y = -10.0
-  
+        //setting each side's material to a month of the year using materials
         for item in 0...calendarViewControllers.count - 1 {
             let material = SCNMaterial()
             material.diffuse.contents = calendarViewControllers[item].view
             dodecahedronNode.childNodes[item].geometry?.firstMaterial = material
         }
-    
+        //adding the dodecahedron into the view
         sceneView.scene.rootNode.addChildNode(dodecahedronNode)
         dodecahedronNode.position = vector
     }
